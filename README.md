@@ -22,7 +22,7 @@ To get started, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/TaskTango.git
+   git clone https://github.com/Kagimbz/To-Do-or-Not-To-Do.git
 
 2. **Navigate to the Project Directory**:
    ```bash
