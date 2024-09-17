@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #toggleFormButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #taskForm {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            max-width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        form {
+            display: inline;
+        }
+
+        form button {
+            padding: 5px 10px;
+            background-color: #17a2b8;
+            border: none;
+            border-radius: 3px;
+            color: white;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #138496;
+        }
+
+        form button.delete {
+            background-color: #dc3545;
+        }
+
+        form button.delete:hover {
+            background-color: #c82333;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+
+    <button id="toggleFormButton">Create Task</button>
+    <div id="taskForm" style="display: none">
+        <form action="/tasks/add" method="post">
+            <label>
+                Task Title:
+                <input type="text" name="title" placeholder="Title" required />
+            </label>
+            <label>
+                Task Description:
+                <input type="text" name="desc" placeholder="Description" required />
+            </label>
+            <label>
+                Due Date:
+                <input type="date" name="dueDate" required />
+            </label>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <h2>Tasks</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.id}"></td>
+            <td th:text="${task.title}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.dueDate}"></td>
+            <td th:text="${task.completed ? 'Complete' : 'Incomplete'}"></td>
+            <td>
+                <form th:action="@{'/tasks/' + ${task.id} + '/complete'}" method="post" style="display: inline-block">
+                    <button type="submit" th:attr="disabled=${task.completed ? 'disabled' : null}">Mark as Complete</button>
+                </form>
+
+                <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post" style="display: inline-block">
+                    <button type="submit" class="delete">Delete Task</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById("toggleFormButton").addEventListener("click", function() {
+            const formDiv = document.getElementById("taskForm");
+            formDiv.style.display = formDiv.style.display === "none" ? "block" : "none";
+        });
+    </script>
+
+</body>
+</html>
