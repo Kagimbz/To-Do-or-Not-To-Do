@@ -2,13 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
-            padding: 20px;
+            padding: 1.25rem; /* 20px */
             color: #333;
         }
 
@@ -19,40 +20,40 @@
 
         #toggleFormButton {
             display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
+            margin: 1.25rem auto; /* 20px */
+            padding: 0.625rem 1.25rem; /* 10px 20px */
             background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 0.3125rem; /* 5px */
             cursor: pointer;
-            font-size: 16px;
+            font-size: 1rem; /* 16px */
         }
 
         #taskForm {
             background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 1.25rem; /* 20px */
+            border: 0.0625rem solid #ddd; /* 1px */
+            border-radius: 0.3125rem; /* 5px */
             width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 31.25rem; /* 500px */
+            margin: 1.25rem auto; /* 20px */
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 0.625rem; /* 10px */
         }
 
         input[type="text"],
         input[type="date"] {
             width: 100%;
             max-width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 0.625rem; /* 10px */
+            margin-top: 0.3125rem; /* 5px */
+            border: 0.0625rem solid #ccc; /* 1px */
+            border-radius: 0.25rem; /* 4px */
             box-sizing: border-box;
         }
 
@@ -60,10 +61,10 @@
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            padding: 0.625rem 0.9375rem; /* 10px 15px */
+            border-radius: 0.3125rem; /* 5px */
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 0.625rem; /* 10px */
             width: 100%;
         }
 
@@ -71,23 +72,38 @@
             background-color: #0056b3;
         }
 
+        .container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 1.25rem; /* 20px */
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
+        }
+
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 1.25rem; /* 20px */
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
         }
 
         th, td {
-            padding: 15px;
+            padding: 0.9375rem; /* 15px */
             text-align: center;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 0.0625rem solid #ddd; /* 1px */
         }
 
         th {
             background-color: #007bff;
             color: white;
         }
+
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 0.875rem;
+            }
+        }
+
 
         tr:hover {
             background-color: #f1f1f1;
@@ -98,10 +114,10 @@
         }
 
         form button {
-            padding: 5px 10px;
+            padding: 0.3125rem 0.625rem; /* 5px 10px */
             background-color: #17a2b8;
             border: none;
-            border-radius: 3px;
+            border-radius: 0.1875rem; /* 3px */
             color: white;
             cursor: pointer;
         }
@@ -119,31 +135,34 @@
         }
 
     </style>
+
 </head>
+
 <body>
-    <h1>Task Manager</h1>
+<h1>Flay's Task Manager</h1>
 
-    <button id="toggleFormButton">Create Task</button>
-    <div id="taskForm" style="display: none">
-        <form action="/tasks/add" method="post">
-            <label>
-                Task Title:
-                <input type="text" name="title" placeholder="Title" required />
-            </label>
-            <label>
-                Task Description:
-                <input type="text" name="desc" placeholder="Description" required />
-            </label>
-            <label>
-                Due Date:
-                <input type="date" name="dueDate" required />
-            </label>
-            <button type="submit">Add Task</button>
-        </form>
-    </div>
+<button id="toggleFormButton">Create Task</button>
+<div id="taskForm" style="display: none" class="container">
+    <form action="/tasks/add" method="post">
+        <label>
+            Task Title:
+            <input type="text" name="title" placeholder="Title" required/>
+        </label>
+        <label>
+            Task Description:
+            <input type="text" name="desc" placeholder="Description" required/>
+        </label>
+        <label>
+            Due Date:
+            <input type="date" name="dueDate" required/>
+        </label>
+        <button type="submit">Add Task</button>
+    </form>
+</div>
 
-    <h2>Tasks</h2>
+<h2>Tasks</h2>
 
+<div class="container">
     <table>
         <thead>
         <tr>
@@ -174,13 +193,14 @@
         </tr>
         </tbody>
     </table>
+</div>
 
-    <script>
-        document.getElementById("toggleFormButton").addEventListener("click", function() {
-            const formDiv = document.getElementById("taskForm");
-            formDiv.style.display = formDiv.style.display === "none" ? "block" : "none";
-        });
-    </script>
+<script>
+    document.getElementById("toggleFormButton").addEventListener("click", function () {
+        const formDiv = document.getElementById("taskForm");
+        formDiv.style.display = formDiv.style.display === "none" ? "block" : "none";
+    });
+</script>
 
 </body>
 </html>
